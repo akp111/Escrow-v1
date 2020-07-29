@@ -1,14 +1,39 @@
-pragma solidity >=0.4.0 <=0.7.0;
 
-contract A{
-    address[] contadd;
-
-    mapping (address=>mapping(address=>address)) public addTocont ;
-  
-  function recordAdd(address _cont,address _dapp) public{
-      addTocont[msg.sender][_dapp]=_cont;
-  }
-
+//Write your own contracts here. Currently compiles using solc v0.4.15+commit.bbb8e64f.
+pragma solidity >=0.4.22 <0.7.0;
+pragma experimental ABIEncoderV2;
+contract A {
+    
+    struct escrowContract{
+        address con;
+        address publisher;
+        address dapp;
+        uint reward;
+        
+        
+    }
+    
+    
+    mapping(string => escrowContract) contractAddress;
+    
+    
+    function pushContractAddress(string memory hash,address escrowCon, address pub,address user,uint quesReward)
+        public
+    {
+        contractAddress[hash].con=escrowCon;
+        contractAddress[hash].publisher=pub;
+        contractAddress[hash].dapp=user;
+        contractAddress[hash].reward=quesReward;
+    }
+    
+    function sendContractAddress(string memory hash) public view  returns(escrowContract memory) 
+    {
+        return contractAddress[hash];
+        
+    }
+    
+    
+    
 }
 
 // contract B{
@@ -17,7 +42,7 @@ contract A{
     
 //     State public currState;
     
-//     address public publisher;
+//     address payable public publisher;
 //     address payable public Dapp;
 //     uint public reward;
     
@@ -27,14 +52,14 @@ contract A{
 //     }
      
     
-//     constructor( address payable _seller, uint _reward) public {
+//     constructor( address payable _seller)payable public {
 //         publisher = msg.sender;
 //         Dapp=_seller;
-//         reward=_reward;
+//         reward=msg.value;
 //         require(currState == State.AWAITING_PAYMENT, "Already paid");
 //         currState = State.AWAIT_TRANSFER;
-//         address payable contractAdd = address(uint160(address(this)));
-//         contractAdd.transfer(reward);
+//         // address payable contractAdd = payable (address(uint160(address(this))));
+//         payable(address(this)).transfer(reward);
         
 //     }
     
@@ -44,7 +69,7 @@ contract A{
 //          currState = State.AWAITING_DELIVERY;
 //     }
     
-//     function confirmDelivery() onlyBuyer external {
+//     function confirmDelivery() payable onlyBuyer external {
 //         require(currState == State.AWAITING_DELIVERY, "Cannot confirm delivery");
 //         Dapp.transfer(address(this).balance);
 //         currState = State.COMPLETE;

@@ -7,7 +7,7 @@ const Babi=B.abi;//include the abi code of the contract you want to deploy throu
 const Bbyte=B.byte;//inlcude the bytecode of the contract you want to deploy
 
 window.web3 = new Web3('http://localhost:8545')
-const contractAAddress="0xd29d746dCf613d5bb1b2a47a71a4743adEaC4A8A"
+const contractAAddress="0x46834751cE0734d3fA54329D4A6B07cb5cd5fDC0"
 const contractA = new window.web3.eth.Contract(Aabi,contractAAddress)
 async function loadWeb3()
    {
@@ -29,7 +29,7 @@ async function loadWeb3()
 
  let contB=[
    {
-     dappAdd:"0xe162Bf3c75657E6930c9ac5245164B81dAf019B0",
+  dappAdd:"0x9E5A4B34D57462865452a2781d4935A2B9AA6810",
    contractBAddress:null,//address of B
    contractB:null,//for calling functions
 
@@ -53,7 +53,7 @@ async function loadWeb3()
   let deploy_contract = new window.web3.eth.Contract(JSON.parse(Babi));
   let payload = {
     data: Bbyte,
-    arguments:[contB[0].dappAdd,2]//specify the arguments if you have constructor
+    arguments:[contB[0].dappAdd]//specify the arguments if you have constructor
   }
   
 
@@ -71,27 +71,24 @@ async function loadWeb3()
     contB[0].contractBAddress=newContractInstance.options.address;
   })
   console.log(contractA)
-  await contractA.methods.recordAdd(contB[0].contractBAddress,contB[0].dappAdd).send({from:account})
+  await contractA.methods.pushContractAddress("abc",contB[0].contractBAddress,account,contB[0].dappAdd,2).send({from:account,gas:120000})
 
   contB[0].contractB=new window.web3.eth.Contract(JSON.parse(Babi), contB[0].contractBAddress);
   console.log(contB[0].contractB)
   console.log(contB[0].contractBAddress)
-  console.log(await contractA.methods.addTocont(account,contB[0].dappAdd).call())
  },
 
  confirmOwnership:async function()
  {
    let {account,balance}=await contB[0].getAccount();
-   if(await await contractA.methods.addTocont(account,contB[0].dappAdd).call()==contB[0].contractBAddress&&contB[0].contractBAddress!=null)
-    await contB[0].contractB.methods.confirmOwnership().send({from:account})
- 
+    await contB[0].contractB.methods.confirmOwnershipTransfer().send({from:"0x9E5A4B34D57462865452a2781d4935A2B9AA6810"})
+ console.log("Mona loves Ashis")
  },
  confirmDelivery: async function()
  {
   let {account,balance}=await contB[0].getAccount();
-  if(await await contractA.methods.addTocont(account,contB[0].dappAdd).call()==contB[0].contractBAddress&&contB[0].contractBAddress!=null)
   await contB[0].contractB.methods.confirmDelivery().send({from:account})
-
+  console.log("Ashis loves Mona")
  }}
  
  ]
