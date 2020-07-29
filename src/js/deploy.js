@@ -29,7 +29,7 @@ async function loadWeb3()
 
  let contB=[
    {
-  dappAdd:"0x9E5A4B34D57462865452a2781d4935A2B9AA6810",
+    tdappAdd:"0x0a6266cFC97d559305F80A75873934C86B542F1A",
    contractBAddress:null,//address of B
    contractB:null,//for calling functions
 
@@ -60,7 +60,8 @@ async function loadWeb3()
   let parameter = {
     from: account,
     gas: window.web3.utils.toHex(800000),
-    gasPrice: window.web3.utils.toHex(window.web3.utils.toWei('30', 'gwei'))
+    gasPrice: window.web3.utils.toHex(window.web3.utils.toWei('30', 'gwei')),
+    value: 2000000000000000000
   }
   
   await deploy_contract.deploy(payload).send(parameter, (err, transactionHash) => {
@@ -76,20 +77,28 @@ async function loadWeb3()
   contB[0].contractB=new window.web3.eth.Contract(JSON.parse(Babi), contB[0].contractBAddress);
   console.log(contB[0].contractB)
   console.log(contB[0].contractBAddress)
+  console.log(await contB[0].getStatus());
  },
 
  confirmOwnership:async function()
  {
+  console.log(await contB[0].getStatus());
    let {account,balance}=await contB[0].getAccount();
-    await contB[0].contractB.methods.confirmOwnershipTransfer().send({from:"0x9E5A4B34D57462865452a2781d4935A2B9AA6810"})
- console.log("Mona loves Ashis")
+    await contB[0].contractB.methods.confirmOwnershipTransfer().send({from:"0x0a6266cFC97d559305F80A75873934C86B542F1A"})
+ console.log("Confirmed Ownership Transfered")
+ console.log(await contB[0].getStatus());
  },
  confirmDelivery: async function()
  {
+  console.log(await contB[0].getStatus());
   let {account,balance}=await contB[0].getAccount();
   await contB[0].contractB.methods.confirmDelivery().send({from:account})
-  console.log("Ashis loves Mona")
- }}
+  console.log("Confirmed delivery")
+  console.log(await contB[0].getStatus());
+ },
+getStatus:async function(){
+  return await contB[0].contractB.methods.currState().call()
+}}
  
  ]
 
