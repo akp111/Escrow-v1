@@ -29,9 +29,10 @@ async function loadWeb3()
 
  let contB=[
    {
-    tdappAdd:"0x0a6266cFC97d559305F80A75873934C86B542F1A",
+    dappAdd:"0x43A26224C03D6f06940aDFbE6684627B9aac1955",
    contractBAddress:null,//address of B
    contractB:null,//for calling functions
+   contractBBalance:null,
 
    
    getAccount: async function(){
@@ -44,6 +45,11 @@ async function loadWeb3()
     
 
    },
+   getBalance: async function(){
+    let balance=await window.web3.eth.getBalance(contB[0].contractBAddress)
+    console.log(balance)
+    return balance
+  },
 
   deployContB:async function()
  {
@@ -78,15 +84,19 @@ async function loadWeb3()
   console.log(contB[0].contractB)
   console.log(contB[0].contractBAddress)
   console.log(await contB[0].getStatus());
+  return await contB[0].getStatus()
+  
  },
 
  confirmOwnership:async function()
  {
   console.log(await contB[0].getStatus());
    let {account,balance}=await contB[0].getAccount();
-    await contB[0].contractB.methods.confirmOwnershipTransfer().send({from:"0x0a6266cFC97d559305F80A75873934C86B542F1A"})
+    await contB[0].contractB.methods.confirmOwnershipTransfer().send({from: contB[0].dappAdd})
  console.log("Confirmed Ownership Transfered")
  console.log(await contB[0].getStatus());
+ console.log(await contB[0].getBalance())
+ return await contB[0].getStatus()
  },
  confirmDelivery: async function()
  {
@@ -95,10 +105,14 @@ async function loadWeb3()
   await contB[0].contractB.methods.confirmDelivery().send({from:account})
   console.log("Confirmed delivery")
   console.log(await contB[0].getStatus());
+  return await contB[0].getStatus()
  },
 getStatus:async function(){
   return await contB[0].contractB.methods.currState().call()
-}}
+},
+
+},
+
  
  ]
 

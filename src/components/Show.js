@@ -1,28 +1,19 @@
-import React from "react"
+import React,{useState,useEffect} from "react"
 import contB from "../js/deploy"
 
 function Show(){
-        const [status, setstate] = useState(contB[0].getStatus())
-         function changeState1()
-        {
-                setstate(1);
-        }
-         function changeState2()
-        {
-                setstate(2);
-        }
-        function changeState3()
-        {
-                setstate(3);
-        }
-    
+        
+        let [status, setstatus] = useState(0)
+        let [balance,setbalance]= useState(0)
+      
         return (
         <>
         <h1>Hello World</h1>
         <h2>{contB[0].dappAdd}</h2>
-        <button onClick={contB[0].deployContB} >Deploy Contract B</button>
-        <button onClick={contB[0].confirmOwnership}>Confirm Ownership</button>
-        <button onClick={contB[0].confirmDelivery}>Confirm Delivery</button>
+        <p>Balance: {balance}</p>
+        <button onClick={()=>{contB[0].deployContB();setstatus(1)}} disabled={status>=1}>Initiate escrow</button>
+        <button onClick={()=>{contB[0].confirmOwnership();setstatus(2)}} disabled={status!==1}>Confirm Ownership</button>
+        <button onClick={()=>{contB[0].confirmDelivery();setstatus(3)}} disabled={status!=2}>Confirm Delivery</button>
         </>
         )
     
