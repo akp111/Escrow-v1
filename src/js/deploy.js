@@ -29,7 +29,7 @@ async function loadWeb3()
 
  let contB=[
    {
-    dappAdd:"0x43A26224C03D6f06940aDFbE6684627B9aac1955",
+    dappAdd:"0x9984d897aAB821a343586daDe6a72649bf51De21",
    contractBAddress:null,//address of B
    contractB:null,//for calling functions
    contractBBalance:null,
@@ -85,6 +85,7 @@ async function loadWeb3()
   console.log(contB[0].contractBAddress)
   console.log(await contB[0].getStatus());
   return await contB[0].getStatus()
+  // return res
   
  },
 
