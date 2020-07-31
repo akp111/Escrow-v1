@@ -29,7 +29,7 @@ async function loadWeb3()
 
  let contB=[
    {
-    dappAdd:"0x9984d897aAB821a343586daDe6a72649bf51De21",
+    dappAdd:"0x47e6a102F03cdAffA0bFbd517E8B977324133828",
    contractBAddress:null,//address of B
    contractB:null,//for calling functions
    contractBBalance:null,

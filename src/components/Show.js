@@ -10,8 +10,8 @@ import contB from "../js/deploy"
       
         return (
         <>
-        <h1>Hello World</h1>
-        <h2>{contB[0].dappAdd}</h2>
+        <h1>Escrow Contract Live Deploy</h1>
+        <h2>Dapp Owner Address:{contB[0].dappAdd}</h2>
         <p>Balance:{balance}</p>
         <button onClick={async ()=>{setstatus(await contB[0].deployContB());setbalance(await contB[0].getBalance())}} disabled={status>=1}>Initiate escrow</button>
         <button onClick={async()=>{setstatus(await contB[0].confirmOwnership())}} disabled={status>=2}>Confirm Ownership</button>
