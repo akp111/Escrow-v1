@@ -91,6 +91,7 @@ async function loadWeb3()
 
  confirmOwnership:async function()
  {
+  contB[0].contractB=new window.web3.eth.Contract(JSON.parse(Babi), contB[0].contractBAddress);
   console.log(await contB[0].getStatus());
    let {account,balance}=await contB[0].getAccount();
     await contB[0].contractB.methods.confirmOwnershipTransfer().send({from: contB[0].dappAdd})
@@ -101,6 +102,7 @@ async function loadWeb3()
  },
  confirmDelivery: async function()
  {
+  contB[0].contractB=new window.web3.eth.Contract(JSON.parse(Babi), contB[0].contractBAddress);
   console.log(await contB[0].getStatus());
   let {account,balance}=await contB[0].getAccount();
   await contB[0].contractB.methods.confirmDelivery().send({from:account})
@@ -109,6 +111,7 @@ async function loadWeb3()
   return await contB[0].getStatus()
  },
 getStatus:async function(){
+  contB[0].contractB=new window.web3.eth.Contract(JSON.parse(Babi), contB[0].contractBAddress);
   return await contB[0].contractB.methods.currState().call()
 },
 

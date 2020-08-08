@@ -20,6 +20,7 @@ contract A {
     function pushContractAddress(string memory hash,address escrowCon, address pub,address user,uint quesReward)
         public
     {
+    require()
         contractAddress[hash].con=escrowCon;
         contractAddress[hash].publisher=pub;
         contractAddress[hash].dapp=user;
